@@ -1,0 +1,26 @@
+menu "Eddystone Configuration"
+
+    choice EDDYSTONE_MODE
+        bool "eddystone Mode"
+        default EDDYSTONE_SENDER
+	help
+	     Select the eddystone Mode.
+
+        config EDDYSTONE_SENDER
+            bool "eddystone Sender Mode"
+            help
+                Select the eddystone Sender Mode.
+
+        config EDDYSTONE_RECEIVER
+            bool "eddystone Receiver Mode"
+            help
+                Select the eddystone Receiver Mode.
+
+    endchoice
+
+    config EDDYSTONE_MODE
+        int
+        default 0 if EDDYSTONE_SENDER
+        default 1 if EDDYSTONE_RECEIVER
+
+endmenu
