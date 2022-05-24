@@ -264,7 +264,7 @@ esp_eddystone_uuid_t uuid_common = {
 	.uuid = EDDYSTONE_SERVICE_UUID 
 };
 
-
+#if (EDDYSTONE_FRAME_TYPE == EDDYSTONE_UID_FRAME)
 esp_eddystone_frame_t frame_UID = {
 	.len = EDDYSTONE_UID_DATA_LEN,
 	.type = 0x16,
@@ -291,7 +291,7 @@ esp_eddystone_frame_t frame_UID = {
 	.data_frame.uid.reserved[1] = 0x00
 };
 
-/*
+#elif (EDDYSTONE_FRAME_TYPE == EDDYSTONE_URL_FRAME)
 esp_eddystone_frame_t frame_URL = {
 	.len = EDDYSTONE_URL_MAX_LEN,
 	.type = 0x16,
@@ -301,7 +301,7 @@ esp_eddystone_frame_t frame_URL = {
 	.data_frame.url.url_scheme = 0x01,
 	.data_frame.url.encoded_url = {0x57}
 };
-*/
+#endif
 
 esp_err_t esp_ble_config_eddystone_data(esp_eddystone_frame_t *frame, esp_eddystone_packet_t *adv_data)
 {

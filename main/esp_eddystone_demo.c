@@ -34,9 +34,12 @@
 #include "esp_eddystone_api.h"
 const char* DEMO_TAG = "EDDYSTONE_DEMO";
 
-
-//extern esp_eddystone_frame_t frame_URL;
+#if (EDDYSTONE_FRAME_TYPE == EDDYSTONE_URL_FRAME)
+extern esp_eddystone_frame_t frame_URL;
+#elif (EDDYSTONE_FRAME_TYPE == EDDYSTONE_UID_FRAME)
 extern esp_eddystone_frame_t frame_UID;
+#endif
+
 /* declare static functions */
 static void esp_gap_cb(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param_t* param);
 static void esp_eddystone_show_inform(const esp_eddystone_result_t* res);
@@ -221,8 +224,9 @@ void app_main(void)
     esp_eddystone_packet_t eddystone_adv_data;
     ESP_LOGE(DEMO_TAG, "EDDYSTONE_SENDER MODE\n");
 
+/********************************************************************************************/
     esp_err_t status = esp_ble_config_eddystone_data (&frame_UID, &eddystone_adv_data);
-
+/********************************************************************************************/
 
     if (status == ESP_OK){
 	    ESP_LOGE(DEMO_TAG, "config eddystone data is %s\n", esp_err_to_name(status));
