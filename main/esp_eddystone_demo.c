@@ -225,7 +225,7 @@ void app_main(void)
     ESP_LOGE(DEMO_TAG, "EDDYSTONE_SENDER MODE\n");
 
 /********************************************************************************************/
-    esp_err_t status = esp_ble_config_eddystone_data (&frame_UID, &eddystone_adv_data);
+    esp_err_t status = esp_ble_config_eddystone_data (&frame_URL, &eddystone_adv_data);
 /********************************************************************************************/
 
     if (status == ESP_OK){
