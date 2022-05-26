@@ -293,13 +293,14 @@ esp_eddystone_frame_t frame_UID = {
 
 #elif (EDDYSTONE_FRAME_TYPE == EDDYSTONE_URL_FRAME)
 esp_eddystone_frame_t frame_URL = {
-	.len = EDDYSTONE_URL_MAX_LEN,
+//	.len = EDDYSTONE_URL_MAX_LEN,
+	.len = 6,
 	.type = 0x16,
 	.uuid = EDDYSTONE_SERVICE_UUID,
 	.frame_type = EDDYSTONE_FRAME_TYPE_URL,
 	.data_frame.url.tx_power = 0xC5,
 	.data_frame.url.url_scheme = 0x01,
-	.data_frame.url.encoded_url = {0x57}
+	.data_frame.url.encoded_url[3] = {0x66, 0x67, 0x00}
 };
 #endif
 
