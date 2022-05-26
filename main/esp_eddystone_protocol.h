@@ -53,7 +53,7 @@ typedef struct {
 typedef struct {
     int8_t    tx_power;         /*<! calibrated Tx power at 0m */
     uint8_t   url_scheme;       /*<! encoded scheme prefix */
-    uint8_t   encoded_url[EDDYSTONE_URL_MAX_LEN];   /*<! length 1-17 */
+    uint8_t   encoded_url[EDDYSTONE_URL_ENCODED_MAX_LEN];   /*<! length 1-17 */
 } __attribute__((packed))esp_eddystone_url_t;
 
 /* Eddystone TLM frame */

@@ -294,13 +294,25 @@ esp_eddystone_frame_t frame_UID = {
 #elif (EDDYSTONE_FRAME_TYPE == EDDYSTONE_URL_FRAME)
 esp_eddystone_frame_t frame_URL = {
 //	.len = EDDYSTONE_URL_MAX_LEN,
-	.len = 6,
+	.len = 13,
 	.type = 0x16,
 	.uuid = EDDYSTONE_SERVICE_UUID,
 	.frame_type = EDDYSTONE_FRAME_TYPE_URL,
-	.data_frame.url.tx_power = 0xC5,
-	.data_frame.url.url_scheme = 0x01,
-	.data_frame.url.encoded_url[3] = {0x66, 0x67, 0x00}
+	.data_frame.url.tx_power = 0x20,
+	.data_frame.url.url_scheme = 0x03,
+	.data_frame.url.encoded_url[0] = 0x67,
+	.data_frame.url.encoded_url[1] = 0x6F,
+	.data_frame.url.encoded_url[2] = 0x6F,
+	.data_frame.url.encoded_url[3] = 0x67,
+	.data_frame.url.encoded_url[4] = 0x6C,
+	.data_frame.url.encoded_url[5] = 0x65,
+	.data_frame.url.encoded_url[6] = 0x00,
+//	.data_frame.url.encoded_url[7] = 0x32,
+//	.data_frame.url.encoded_url[8] = 0x79,
+//	.data_frame.url.encoded_url[9] = 0x43,
+//	.data_frame.url.encoded_url[10] = 0x36,
+//	.data_frame.url.encoded_url[11] = 0x4B,
+//	.data_frame.url.encoded_url[12] = 0x58
 };
 #endif
 
