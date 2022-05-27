@@ -314,6 +314,19 @@ esp_eddystone_frame_t frame_URL = {
 //	.data_frame.url.encoded_url[11] = 0x4B,
 //	.data_frame.url.encoded_url[12] = 0x58
 };
+
+#elif (EDDYSTONE_FRAME_TYPE == EDDYSTONE_TLM_FRAME)
+esp_eddystone_frame_t frame_TLM = {
+	.len = EDDYSTONE_TLM_DATA_LEN,
+	.type = 0x16,
+	.uuid = EDDYSTONE_SERVICE_UUID,
+	.frame_type = EDDYSTONE_FRAME_TYPE_TLM,
+	.data_frame.tlm.version = 0x00,
+	.data_frame.tlm.batt = 3000,	// - 1mv/bit
+	.data_frame.tlm.temp = 24,		// - beacon temperature
+	.data_frame.tlm.adv_count = 777,// - количество рекламмных посылок после включения маяка
+	.data_frame.tlm.time = 1212
+};
 #endif
 
 esp_err_t esp_ble_config_eddystone_data(esp_eddystone_frame_t *frame, esp_eddystone_packet_t *adv_data)

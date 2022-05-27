@@ -38,6 +38,8 @@ const char* DEMO_TAG = "EDDYSTONE_DEMO";
 extern esp_eddystone_frame_t frame_URL;
 #elif (EDDYSTONE_FRAME_TYPE == EDDYSTONE_UID_FRAME)
 extern esp_eddystone_frame_t frame_UID;
+#elif (EDDYSTONE_FRAME_TYPE == EDDYSTONE_TLM_FRAME)
+extern esp_eddystone_frame_t frame_TLM;
 #endif
 
 /* declare static functions */
@@ -133,7 +135,7 @@ static void esp_gap_cb(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param_t* par
 		    ESP_LOGE(DEMO_TAG, "Adv start failed: %s", esp_err_to_name(err));
 	    }
 	    else {
-		    ESP_LOGE(DEMO_TAG, "Adv start : %s", esp_err_to_name(err));
+		    ESP_LOGI(DEMO_TAG, "Adv start : %s", esp_err_to_name(err));
 	    }
 	    break;
         case ESP_GAP_BLE_SCAN_RESULT_EVT: {
@@ -218,18 +220,18 @@ void app_main(void)
 #if (EDDYSTONE_MODE == EDDYSTONE_RECEIVER)
     /*<! set scan parameters */
     esp_ble_gap_set_scan_params(&ble_scan_params);
-    ESP_LOGE(DEMO_TAG, "EDDYSTONE_RECEIVER MODE\n");
+    ESP_LOGI(DEMO_TAG, "EDDYSTONE_RECEIVER MODE\n");
 
 #elif (EDDYSTONE_MODE == EDDYSTONE_SENDER)
     esp_eddystone_packet_t eddystone_adv_data;
-    ESP_LOGE(DEMO_TAG, "EDDYSTONE_SENDER MODE\n");
+    ESP_LOGI(DEMO_TAG, "EDDYSTONE_SENDER MODE\n");
 
 /********************************************************************************************/
-    esp_err_t status = esp_ble_config_eddystone_data (&frame_URL, &eddystone_adv_data);
+    esp_err_t status = esp_ble_config_eddystone_data (&frame_TLM, &eddystone_adv_data);
 /********************************************************************************************/
 
     if (status == ESP_OK){
-	    ESP_LOGE(DEMO_TAG, "config eddystone data is %s\n", esp_err_to_name(status));
+	    ESP_LOGI(DEMO_TAG, "config eddystone data is %s\n", esp_err_to_name(status));
 	    esp_ble_gap_config_adv_data_raw((uint8_t*)&eddystone_adv_data, sizeof(eddystone_adv_data));
     }
     else {
