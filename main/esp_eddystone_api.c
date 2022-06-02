@@ -323,7 +323,7 @@ esp_eddystone_frame_t frame_TLM = {
 	.frame_type = EDDYSTONE_FRAME_TYPE_TLM,
 	.data_frame.tlm.version = 0x00,
 	.data_frame.tlm.batt = 3000,	// - 1mv/bit
-	.data_frame.tlm.temp = 24,		// - beacon temperature
+	.data_frame.tlm.temp = 25,		// - beacon temperature
 	.data_frame.tlm.adv_count = 777,// - количество рекламмных посылок после включения маяка
 	.data_frame.tlm.time = 1212
 };

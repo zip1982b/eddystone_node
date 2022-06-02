@@ -29,11 +29,12 @@
 #include "esp_gatt_defs.h"
 #include "esp_gap_ble_api.h"
 #include "freertos/FreeRTOS.h"
-
+#include "freertos/task.h"
 #include "esp_eddystone_protocol.h"
 #include "esp_eddystone_api.h"
 const char* DEMO_TAG = "EDDYSTONE_DEMO";
 
+esp_eddystone_packet_t eddystone_adv_data;
 #if (EDDYSTONE_FRAME_TYPE == EDDYSTONE_URL_FRAME)
 extern esp_eddystone_frame_t frame_URL;
 #elif (EDDYSTONE_FRAME_TYPE == EDDYSTONE_UID_FRAME)
@@ -188,6 +189,27 @@ static void esp_gap_cb(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param_t* par
     }
 }
 
+
+static void water_sensor(void* arg)
+{
+	uint16_t temp = 0;
+	for(;;) {
+		temp += 1;
+		eddystone_adv_data.frame.data_frame.tlm.temp = temp;
+		if (temp == 200){
+			temp = 0;
+		}
+		
+	    esp_ble_gap_config_adv_data_raw((uint8_t*)&eddystone_adv_data, sizeof(eddystone_adv_data));
+
+		vTaskDelay(1000 / portTICK_PERIOD_MS);
+	}
+}
+
+
+
+
+
 void esp_eddystone_appRegister(void)
 {
     esp_err_t status;
@@ -211,6 +233,13 @@ void esp_eddystone_init(void)
 void app_main(void)
 {
     ESP_ERROR_CHECK(nvs_flash_init());
+
+
+//	xTaskCreate(water_sensor, "water_sensor", 2048, NULL, 15, NULL);
+
+
+
+
     ESP_ERROR_CHECK(esp_bt_controller_mem_release(ESP_BT_MODE_CLASSIC_BT));
     esp_bt_controller_config_t bt_cfg = BT_CONTROLLER_INIT_CONFIG_DEFAULT();
     esp_bt_controller_init(&bt_cfg);
@@ -223,11 +252,12 @@ void app_main(void)
     ESP_LOGI(DEMO_TAG, "EDDYSTONE_RECEIVER MODE\n");
 
 #elif (EDDYSTONE_MODE == EDDYSTONE_SENDER)
-    esp_eddystone_packet_t eddystone_adv_data;
+//	xTaskCreate(water_sensor, "water_sensor", 2048, NULL, 15, NULL);
+//    esp_eddystone_packet_t eddystone_adv_data;
     ESP_LOGI(DEMO_TAG, "EDDYSTONE_SENDER MODE\n");
 
 /********************************************************************************************/
-    esp_err_t status = esp_ble_config_eddystone_data (&frame_TLM, &eddystone_adv_data);
+    esp_err_t status = esp_ble_config_eddystone_data (&frame_UID, &eddystone_adv_data);
 /********************************************************************************************/
 
     if (status == ESP_OK){
